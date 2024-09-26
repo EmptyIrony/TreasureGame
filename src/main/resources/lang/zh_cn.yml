@@ -5,3 +5,5 @@ produce: '在 寻宝世界 x:{0} y {1} z {2} 处产生一处 {3} 宝藏，大家
 
 game_start: "游戏开始， 点击消息或者输入/tm join 进入世界"
 game_end: "游戏结束"
+
+chest_open: "&a在 x:{0} y {1} z {2} 处 包厢已被 {3} 打开"

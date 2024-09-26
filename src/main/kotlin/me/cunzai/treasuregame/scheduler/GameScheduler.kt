@@ -7,6 +7,7 @@ import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Chest
 import taboolib.common.platform.Schedule
+import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.console
 import taboolib.module.chat.Components
 import taboolib.module.lang.asLangText

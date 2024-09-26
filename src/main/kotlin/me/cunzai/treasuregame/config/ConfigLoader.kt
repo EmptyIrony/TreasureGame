@@ -1,5 +1,6 @@
 package me.cunzai.treasuregame.config
 
+import io.lumine.xikage.mythicmobs.MythicMobs
 import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
@@ -180,7 +181,9 @@ object ConfigLoader {
         val amount: Int
     ): ItemReward {
         override fun toItemStack(): ItemStack {
-            TODO("Not yet implemented")
+            return MythicMobs.inst().itemManager.getItemStack(mmid).apply {
+                amount = amount
+            }
         }
     }
 
