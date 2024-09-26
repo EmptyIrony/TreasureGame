@@ -102,8 +102,7 @@ object GameScheduler {
         val splitNumber = chestType.splitNumber
         if (splitNumber > 0) {
             val lastIndex = list.lastIndexOf(chestType)
-            val currentIndex = list.size
-            if (currentIndex - lastIndex < splitNumber) {
+            if (lastIndex < splitNumber) {
                 randomChest(list)
                 return
             }
