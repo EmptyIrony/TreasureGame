@@ -1,0 +1,49 @@
+# 设置宝藏世界及随机传送范围
+world: 'baozang'
+rtp: #(min,max) 随机传送的范围大小
+  x: -100~100
+  z: -100~100
+
+# 宝藏世界允许使用的指令
+whitelist_commands:
+  - "treasure"
+  - "gamemode"
+
+# 单位 秒
+period: 10
+spawn_chest_number: 10
+# 只支持时， 从17点开放到23点
+enable_time: "17-23"
+
+remove_previous_treasures: true
+
+chest_type:
+  legend:
+    # 显示名字
+    display_name: "&6&l传说"
+    # 随机权重, 概率为所有类型  权重/权重之和
+    weight: 10
+    split_number: 10
+    min_items: 1
+    max_items: 3
+    items:
+      1: "3:3"
+      2: "1:1"
+      3: "2:2"
+  normal:
+    display_name: "&7普通"
+    weight: 100
+    split_number: 0
+    min_items: 1
+    max_items: 3
+    items:
+      1: "1:1"
+      2: "2:2"
+      3: "3:3"
+
+
+# 大概写的是这些，然后其他内容：
+# 1. 每间隔多长时间 就会产出 x 个箱子
+# 2. 设置一个 Light 雷劈效果，第一个开启箱子的玩家，会有一道雷劈到这个箱子上（不会对玩家产生伤害）
+# 3. 可以设置，第二波箱子产出后，第一波的箱子是否还会存在
+# 4. 设置宝藏世界的开启时间和关闭时间（自动关闭后则将世界内所有玩家移到主城世界）
