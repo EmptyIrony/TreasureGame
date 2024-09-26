@@ -35,6 +35,8 @@ object GameScheduler {
             broadcastCurrentStatus()
         }
 
+        lastEnableStatus = currentEnabled
+
         if (!currentEnabled) return
 
         nextTreasureSeconds--
@@ -80,6 +82,7 @@ object GameScheduler {
 
         for (chest in chests) {
             val spawn = chest.spawn()
+            spawn.world.strikeLightningEffect(spawn)
             lastSpawnedChest += spawn
             onlinePlayers.forEach { player ->
                 player.sendLang(
