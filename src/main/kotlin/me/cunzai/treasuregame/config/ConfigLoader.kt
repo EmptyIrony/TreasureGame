@@ -152,7 +152,7 @@ object ConfigLoader {
 
             val slotsShuffled = (0 until chest.blockInventory.size).shuffled().toMutableList()
 
-            val itemCount = Random.nextInt(minItems, maxItems)
+            val itemCount = Random.nextInt(minItems + 1, maxItems + 1)
             repeat(itemCount) {
                 val slot = slotsShuffled.removeFirst()
                 val index = Random.nextInt(0, list.size - 1)
