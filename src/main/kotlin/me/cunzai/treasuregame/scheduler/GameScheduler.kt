@@ -59,7 +59,7 @@ object GameScheduler {
                 if (openedChest.add(e.clickedBlock.location)) {
                     val location = e.clickedBlock.location
                     location.world.strikeLightningEffect(e.clickedBlock.location)
-                    console().asLangText("chest_open", location.blockX, location.blockY, location.blockZ)
+                    console().asLangText("chest_open", location.blockX, location.blockY, location.blockZ, e.player.displayName)
                         .broadcast()
                 }
             }
