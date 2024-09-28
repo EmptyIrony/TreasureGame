@@ -6,11 +6,13 @@ import org.bukkit.Bukkit
 import org.bukkit.Location
 import org.bukkit.Material
 import org.bukkit.block.Chest
+import org.bukkit.event.player.PlayerInteractEvent
 import taboolib.common.platform.Schedule
 import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.console
 import taboolib.module.chat.Components
 import taboolib.module.lang.asLangText
+import taboolib.platform.util.isRightClickBlock
 import taboolib.platform.util.onlinePlayers
 import taboolib.platform.util.sendLang
 
@@ -29,6 +31,8 @@ object GameScheduler {
 
     val lastSpawnedChest = ArrayList<Location>()
 
+    val openedChest = HashSet<Location>()
+
     @Schedule(period = 20)
     fun s() {
         val currentEnabled = enabled
@@ -44,6 +48,17 @@ object GameScheduler {
         if (nextTreasureSeconds <= 0) {
             summonChests()
             nextTreasureSeconds = ConfigLoader.periodSeconds
+        }
+    }
+
+    @SubscribeEvent
+    fun e(e: PlayerInteractEvent) {
+        if (e.isRightClickBlock()) {
+            if (openedChest.add(e.clickedBlock.location)) {
+                val location = e.clickedBlock.location
+                location.world.strikeLightningEffect(e.clickedBlock.location)
+                console().asLangText("chest_open", location.blockX, location.blockY, location.blockZ)
+            }
         }
     }
 
@@ -101,8 +116,10 @@ object GameScheduler {
         val chestType = ConfigLoader.randomChestList.random()!!
         val splitNumber = chestType.splitNumber
         if (splitNumber > 0) {
-            val lastIndex = list.lastIndexOf(chestType)
-            if (lastIndex != -1 && lastIndex + 1 <= splitNumber) {
+            val lastIndex = list.indexOfLast {
+                it.displayName == chestType.displayName
+            }
+            if (lastIndex != -1 && lastIndex < splitNumber) {
                 randomChest(list)
                 return
             }
