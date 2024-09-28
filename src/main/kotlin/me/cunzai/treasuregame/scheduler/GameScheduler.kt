@@ -12,6 +12,7 @@ import taboolib.common.platform.event.SubscribeEvent
 import taboolib.common.platform.function.console
 import taboolib.module.chat.Components
 import taboolib.module.lang.asLangText
+import taboolib.platform.util.broadcast
 import taboolib.platform.util.isRightClickBlock
 import taboolib.platform.util.onlinePlayers
 import taboolib.platform.util.sendLang
@@ -54,10 +55,13 @@ object GameScheduler {
     @SubscribeEvent
     fun e(e: PlayerInteractEvent) {
         if (e.isRightClickBlock()) {
-            if (openedChest.add(e.clickedBlock.location)) {
-                val location = e.clickedBlock.location
-                location.world.strikeLightningEffect(e.clickedBlock.location)
-                console().asLangText("chest_open", location.blockX, location.blockY, location.blockZ)
+            if (e.clickedBlock.location.world.name == ConfigLoader.treasureWorld && e.clickedBlock.type == Material.CHEST) {
+                if (openedChest.add(e.clickedBlock.location)) {
+                    val location = e.clickedBlock.location
+                    location.world.strikeLightningEffect(e.clickedBlock.location)
+                    console().asLangText("chest_open", location.blockX, location.blockY, location.blockZ)
+                        .broadcast()
+                }
             }
         }
     }
