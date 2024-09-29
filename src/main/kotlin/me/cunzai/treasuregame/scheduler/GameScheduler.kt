@@ -30,6 +30,8 @@ object GameScheduler {
             }
         }
 
+    val spawnedChest = ArrayList<Location>()
+
     val lastSpawnedChest = ArrayList<Location>()
 
     val openedChest = HashSet<Location>()
@@ -39,6 +41,10 @@ object GameScheduler {
         val currentEnabled = enabled
         if ((currentEnabled && !lastEnableStatus) || (!enabled && lastEnableStatus)) {
             broadcastCurrentStatus()
+            if (enabled) {
+                openedChest.clear()
+                spawnedChest.clear()
+            }
         }
 
         lastEnableStatus = currentEnabled
@@ -104,6 +110,7 @@ object GameScheduler {
             val spawn = chest.spawn()
             spawn.world.strikeLightningEffect(spawn)
             lastSpawnedChest += spawn
+            spawnedChest += spawn
             onlinePlayers.forEach { player ->
                 player.sendLang(
                     "produce",
